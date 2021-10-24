@@ -44,6 +44,7 @@ def test_alloc_overflow():
     feeder = Feeder.deploy(
         [accounts[0], accounts[1]], [20, 80], name, {"from": account}
     )
+    print(f"get all members: {feeder.getAllMembers()}")
 
     funder = accounts[4]
     print("funding account with 10 ether")

@@ -50,15 +50,23 @@ contract Feeder {
         return address(this).balance;
     }
 
-    modifier hasAccess(uint256 _amount) {
-        require(user[msg.sender].state == STATE.OPEN);
-        require(user[msg.sender].allocation > 0, "Zero allocation");
+    function getTotalFunded() public view returns (uint256) {
         uint256 sumWithdrawn = 0;
         for (uint256 i = 0; i < users.length; i++) {
             sumWithdrawn += user[users[i]].withdrawn;
         }
         uint256 total = sumWithdrawn + uint256(address(this).balance);
+        return total;
+    }
 
+    function getAllMembers() public view returns (address[] memory) {
+        return users;
+    }
+
+    modifier hasAccess(uint256 _amount) {
+        require(user[msg.sender].state == STATE.OPEN);
+        require(user[msg.sender].allocation > 0, "Zero allocation");
+        uint256 total = getTotalFunded();
         require(
             _amount <=
                 ((total * user[msg.sender].allocation) / 100) -

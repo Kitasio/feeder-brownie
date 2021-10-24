@@ -55,6 +55,6 @@ def deploy_feeder():
 
 
 def main():
-    deploy()
-    # deploy_feeder()
+    # deploy()
+    deploy_feeder()
     # createFeeder()
